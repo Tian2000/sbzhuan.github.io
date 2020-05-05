@@ -8,13 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="thinkphp 5.0.5-5.0.22 远程代码执行分析影响版本 ThinkPHP 5.0.5-5.0.22 ThinkPHP 5.1.0-5.1.30  漏洞成因路由解析没有对控制器名进行校验，造成可以调用任意类的方法 漏洞分析thinkphp\library\think\App.php 的代码 第116行 12345&#x2F;&#x2F; 未设置调度信息则进行 URL 路由检测if (empty($disp">
 <meta property="og:type" content="article">
-<meta property="og:title" content="thinkphp5.0.5-5.0.22rce">
-<meta property="og:url" content="https://tian2000.github.io/2020/05/05/thinkphp5.0.5-5.0.22rce/index.html">
+<meta property="og:title" content="thinkphp 5.0.5-5.0.22rce">
+<meta property="og:url" content="https://tian2000.github.io/2020/05/05/thinkphp%205.0.5-5.0.22rce/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="thinkphp 5.0.5-5.0.22 远程代码执行分析影响版本 ThinkPHP 5.0.5-5.0.22 ThinkPHP 5.1.0-5.1.30  漏洞成因路由解析没有对控制器名进行校验，造成可以调用任意类的方法 漏洞分析thinkphp\library\think\App.php 的代码 第116行 12345&#x2F;&#x2F; 未设置调度信息则进行 URL 路由检测if (empty($disp">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-05-05T04:32:52.236Z">
-<meta property="article:modified_time" content="2020-05-05T04:28:41.940Z">
+<meta property="article:modified_time" content="2020-05-05T04:37:29.285Z">
 <meta property="article:author" content="tian">
 <meta name="twitter:card" content="summary">
     
@@ -36,7 +36,7 @@
         
     
     <!-- title -->
-    <title>thinkphp5.0.5-5.0.22rce</title>
+    <title>thinkphp 5.0.5-5.0.22rce</title>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -88,17 +88,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://tian2000.github.io/2020/05/05/thinkphp5.0.5-5.0.22rce/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://tian2000.github.io/2020/05/05/thinkphp5.0.5-5.0.22rce/&text=thinkphp5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://tian2000.github.io/2020/05/05/thinkphp5.0.5-5.0.22rce/&title=thinkphp5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tian2000.github.io/2020/05/05/thinkphp5.0.5-5.0.22rce/&is_video=false&description=thinkphp5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=thinkphp5.0.5-5.0.22rce&body=Check out this article: https://tian2000.github.io/2020/05/05/thinkphp5.0.5-5.0.22rce/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://tian2000.github.io/2020/05/05/thinkphp5.0.5-5.0.22rce/&title=thinkphp5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://tian2000.github.io/2020/05/05/thinkphp5.0.5-5.0.22rce/&title=thinkphp5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://tian2000.github.io/2020/05/05/thinkphp5.0.5-5.0.22rce/&title=thinkphp5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://tian2000.github.io/2020/05/05/thinkphp5.0.5-5.0.22rce/&title=thinkphp5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://tian2000.github.io/2020/05/05/thinkphp5.0.5-5.0.22rce/&name=thinkphp5.0.5-5.0.22rce&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://tian2000.github.io/2020/05/05/thinkphp5.0.5-5.0.22rce/&t=thinkphp5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://tian2000.github.io/2020/05/05/thinkphp%205.0.5-5.0.22rce/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://tian2000.github.io/2020/05/05/thinkphp%205.0.5-5.0.22rce/&text=thinkphp 5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://tian2000.github.io/2020/05/05/thinkphp%205.0.5-5.0.22rce/&title=thinkphp 5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tian2000.github.io/2020/05/05/thinkphp%205.0.5-5.0.22rce/&is_video=false&description=thinkphp 5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=thinkphp 5.0.5-5.0.22rce&body=Check out this article: https://tian2000.github.io/2020/05/05/thinkphp%205.0.5-5.0.22rce/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://tian2000.github.io/2020/05/05/thinkphp%205.0.5-5.0.22rce/&title=thinkphp 5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://tian2000.github.io/2020/05/05/thinkphp%205.0.5-5.0.22rce/&title=thinkphp 5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://tian2000.github.io/2020/05/05/thinkphp%205.0.5-5.0.22rce/&title=thinkphp 5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://tian2000.github.io/2020/05/05/thinkphp%205.0.5-5.0.22rce/&title=thinkphp 5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://tian2000.github.io/2020/05/05/thinkphp%205.0.5-5.0.22rce/&name=thinkphp 5.0.5-5.0.22rce&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://tian2000.github.io/2020/05/05/thinkphp%205.0.5-5.0.22rce/&t=thinkphp 5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -115,7 +115,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        thinkphp5.0.5-5.0.22rce
+        thinkphp 5.0.5-5.0.22rce
     </h1>
 
 
@@ -177,7 +177,7 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">getModuleAndClass</span><span class="params">($name, $layer, $appendSuffix)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">false</span> !== strpos($name, <span class="string">'\\'</span>)) &#123;</span><br><span class="line">            $module = Request::instance()-&gt;module();</span><br><span class="line">            $class  = $name;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (strpos($name, <span class="string">'/'</span>)) &#123;</span><br><span class="line">                <span class="keyword">list</span>($module, $name) = explode(<span class="string">'/'</span>, $name, <span class="number">2</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                $module = Request::instance()-&gt;module();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            $class = <span class="keyword">self</span>::parseClass($module, $layer, $name, $appendSuffix);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> [$module, $class];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
 <p>从App::exec()一直到Loader::getModuleAndClass()，如果控制器名存在 ‘\‘ ,则直接赋值给$class,然后就在Loader::controller()里调用了App::invokeClass($class)实例化该类，漏洞的成因就是这里没有正确校验控制器名，从而造成实例化任意类的方法，就像执行了控制器的方法一样。</p>
-<p>payload示例：127.0.0.1/index.php/?s=index/\think\app/invokefunction&amp;function=call_user_func_array&amp;vars[0]=file_put_contents&amp;vars[1][]=1.php&amp;vars[1][]=<?php phpinfo();?></p>
+<p>payload示例：127.0.0.1/index.php/?s=index/\think\app/invokefunction&amp;function=call_user_func_array&amp;vars[0]=file_put_contents&amp;vars[1][]=1.php&amp;vars[1][]=&lt;?php phpinfo();</p>
 <h3 id="利用条件"><a href="#利用条件" class="headerlink" title="利用条件"></a>利用条件</h3><p>没有开启强制路由</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$result = Route::check($request, $path, $depr, $config[<span class="string">'url_domain_deploy'</span>]);</span><br><span class="line">            $must   = !is_null(<span class="keyword">self</span>::$routeMust) ? <span class="keyword">self</span>::$routeMust : $config[<span class="string">'url_route_must'</span>];</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> ($must &amp;&amp; <span class="keyword">false</span> === $result) &#123;</span><br><span class="line">                <span class="comment">// 路由无效</span></span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> RouteNotFoundException();</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
 
@@ -219,17 +219,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://tian2000.github.io/2020/05/05/thinkphp5.0.5-5.0.22rce/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://tian2000.github.io/2020/05/05/thinkphp5.0.5-5.0.22rce/&text=thinkphp5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://tian2000.github.io/2020/05/05/thinkphp5.0.5-5.0.22rce/&title=thinkphp5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tian2000.github.io/2020/05/05/thinkphp5.0.5-5.0.22rce/&is_video=false&description=thinkphp5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=thinkphp5.0.5-5.0.22rce&body=Check out this article: https://tian2000.github.io/2020/05/05/thinkphp5.0.5-5.0.22rce/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://tian2000.github.io/2020/05/05/thinkphp5.0.5-5.0.22rce/&title=thinkphp5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://tian2000.github.io/2020/05/05/thinkphp5.0.5-5.0.22rce/&title=thinkphp5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://tian2000.github.io/2020/05/05/thinkphp5.0.5-5.0.22rce/&title=thinkphp5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://tian2000.github.io/2020/05/05/thinkphp5.0.5-5.0.22rce/&title=thinkphp5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://tian2000.github.io/2020/05/05/thinkphp5.0.5-5.0.22rce/&name=thinkphp5.0.5-5.0.22rce&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://tian2000.github.io/2020/05/05/thinkphp5.0.5-5.0.22rce/&t=thinkphp5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://tian2000.github.io/2020/05/05/thinkphp%205.0.5-5.0.22rce/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://tian2000.github.io/2020/05/05/thinkphp%205.0.5-5.0.22rce/&text=thinkphp 5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://tian2000.github.io/2020/05/05/thinkphp%205.0.5-5.0.22rce/&title=thinkphp 5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tian2000.github.io/2020/05/05/thinkphp%205.0.5-5.0.22rce/&is_video=false&description=thinkphp 5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=thinkphp 5.0.5-5.0.22rce&body=Check out this article: https://tian2000.github.io/2020/05/05/thinkphp%205.0.5-5.0.22rce/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://tian2000.github.io/2020/05/05/thinkphp%205.0.5-5.0.22rce/&title=thinkphp 5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://tian2000.github.io/2020/05/05/thinkphp%205.0.5-5.0.22rce/&title=thinkphp 5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://tian2000.github.io/2020/05/05/thinkphp%205.0.5-5.0.22rce/&title=thinkphp 5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://tian2000.github.io/2020/05/05/thinkphp%205.0.5-5.0.22rce/&title=thinkphp 5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://tian2000.github.io/2020/05/05/thinkphp%205.0.5-5.0.22rce/&name=thinkphp 5.0.5-5.0.22rce&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://tian2000.github.io/2020/05/05/thinkphp%205.0.5-5.0.22rce/&t=thinkphp 5.0.5-5.0.22rce" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
